@@ -4,15 +4,19 @@
   "type": "module",
   "scripts": {
     "start": "bun run src/index.ts",
-    "dev": "bun --watch run src/index.ts"
+    "dev": "bun --watch run src/index.ts",
+    "generate": "drizzle-kit generate:sqlite",
+    "migrate": "bun run src/db/migrate.ts"
   },
   "devDependencies": {
     "@types/bun": "latest",
-    "typescript": "latest"
+    "typescript": "latest",
+    "drizzle-kit": "latest"
   },
   "dependencies": {
     "@hono/node-server": "latest",
     "@libsql/client": "latest",
+    "drizzle-orm": "latest",
     "hono": "latest"
   }
 }
