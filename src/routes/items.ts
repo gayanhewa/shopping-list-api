@@ -1,25 +1,30 @@
 import { Hono } from 'hono';
 import { db } from '../config/db';
 import { items } from '../db/schema';
-import { eq } from 'drizzle-orm';
+import { eq, and } from 'drizzle-orm';
 
 const itemsRouter = new Hono();
 
-// Get all items
+// Get all items for the authenticated user
 itemsRouter.get('/', async (c) => {
   try {
-    const result = await db.select().from(items);
+    const user = c.get('user');
+    const result = await db.select().from(items).where(eq(items.userId, user.userId));
     return c.json(result);
   } catch (error) {
     return c.json({ error: 'Failed to fetch items' }, 500);
   }
 });
 
-// Get item by id
+// Get item by id (only if it belongs to the user)
 itemsRouter.get('/:id', async (c) => {
   try {
+    const user = c.get('user');
     const id = Number(c.req.param('id'));
-    const result = await db.select().from(items).where(eq(items.id, id));
+    const result = await db
+      .select()
+      .from(items)
+      .where(and(eq(items.id, id), eq(items.userId, user.userId)));
     
     if (!result.length) {
       return c.json({ error: 'Item not found' }, 404);
@@ -31,15 +36,17 @@ itemsRouter.get('/:id', async (c) => {
   }
 });
 
-// Create a new item
+// Create a new item for the authenticated user
 itemsRouter.post('/', async (c) => {
   try {
+    const user = c.get('user');
     const body = await c.req.json();
     const { name, quantity } = body;
 
     const result = await db.insert(items).values({
       name,
       quantity,
+      userId: user.userId,
     }).returning();
 
     return c.json(result[0], 201);
@@ -48,9 +55,10 @@ itemsRouter.post('/', async (c) => {
   }
 });
 
-// Update an item
+// Update an item (only if it belongs to the user)
 itemsRouter.put('/:id', async (c) => {
   try {
+    const user = c.get('user');
     const id = Number(c.req.param('id'));
     const body = await c.req.json();
     const { name, quantity } = body;
@@ -58,7 +66,7 @@ itemsRouter.put('/:id', async (c) => {
     const result = await db
       .update(items)
       .set({ name, quantity })
-      .where(eq(items.id, id))
+      .where(and(eq(items.id, id), eq(items.userId, user.userId)))
       .returning();
 
     if (!result.length) {
@@ -71,13 +79,14 @@ itemsRouter.put('/:id', async (c) => {
   }
 });
 
-// Delete an item
+// Delete an item (only if it belongs to the user)
 itemsRouter.delete('/:id', async (c) => {
   try {
+    const user = c.get('user');
     const id = Number(c.req.param('id'));
     const result = await db
       .delete(items)
-      .where(eq(items.id, id))
+      .where(and(eq(items.id, id), eq(items.userId, user.userId)))
       .returning();
 
     if (!result.length) {
