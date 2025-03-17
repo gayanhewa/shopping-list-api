@@ -1,17 +1,18 @@
 {
   "name": "shopping-list-api",
-  "module": "index.ts",
+  "module": "src/index.ts",
   "type": "module",
-  "private": true,
-  "devDependencies": {
-    "@types/bun": "latest"
+  "scripts": {
+    "start": "bun run src/index.ts",
+    "dev": "bun --watch run src/index.ts"
   },
-  "peerDependencies": {
-    "typescript": "^5"
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "latest"
   },
   "dependencies": {
-    "@hono/node-server": "^1.13.8",
-    "@libsql/client": "^0.15.0",
-    "hono": "^4.7.4"
+    "@hono/node-server": "latest",
+    "@libsql/client": "latest",
+    "hono": "latest"
   }
 }
