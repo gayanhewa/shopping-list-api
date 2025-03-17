@@ -5,13 +5,13 @@
       "name": "shopping-list-api",
       "dependencies": {
         "@hono/node-server": "latest",
-        "@libsql/client": "^0.15.0",
-        "drizzle-kit": "^0.30.5",
-        "drizzle-orm": "^0.40.0",
+        "@libsql/client": "latest",
+        "drizzle-orm": "latest",
         "hono": "latest",
       },
       "devDependencies": {
         "@types/bun": "latest",
+        "drizzle-kit": "latest",
         "typescript": "latest",
       },
     },

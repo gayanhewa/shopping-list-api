@@ -5,7 +5,7 @@
   "scripts": {
     "start": "bun run src/index.ts",
     "dev": "bun --watch run src/index.ts",
-    "generate": "drizzle-kit generate:sqlite",
+    "generate": "bun drizzle-kit generate",
     "migrate": "bun run src/db/migrate.ts"
   },
   "devDependencies": {
