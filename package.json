@@ -16,6 +16,8 @@
   "dependencies": {
     "@hono/node-server": "latest",
     "@libsql/client": "latest",
+    "@types/bcryptjs": "^3.0.0",
+    "bcryptjs": "^3.0.2",
     "drizzle-orm": "latest",
     "hono": "latest"
   }
