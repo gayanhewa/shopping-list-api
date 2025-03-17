@@ -15,6 +15,13 @@
       "when": 1742216032848,
       "tag": "0001_medical_odin",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1742217142311,
+      "tag": "0002_sticky_meggan",
+      "breakpoints": true
     }
   ]
 }
