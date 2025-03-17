@@ -1,6 +1,7 @@
 import { serve } from '@hono/node-server';
 import { Hono } from 'hono';
 import items from './routes/items';
+import lists from './routes/lists';
 import auth from './routes/auth';
 import { authMiddleware } from './middleware/auth';
 
@@ -11,6 +12,7 @@ app.route('/auth', auth);
 
 // Protected routes
 app.use('/api/*', authMiddleware);
+app.route('/api/lists', lists);
 app.route('/api/items', items);
 
 // Health check endpoint
